@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - coodesh-challenge-network
+  postgres:
+    build:
+      context: ./container/postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - coodesh-challenge-network
+networks:
+  coodesh-challenge-network:
+    driver: bridge
